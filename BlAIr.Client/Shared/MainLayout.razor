@@ -1,0 +1,75 @@
+﻿@inherits LayoutComponentBase
+@inject IUriHelper uriHelper
+@inject IdentityAuthenticationStateProvider authStateProvider
+
+<AuthorizeView>
+    <Authorized>
+         <div class="main">
+             <Navbar IsExpand="true" IsDark="false" Color="Color.Light">
+                 <NavbarBrand Href="#">BlAir</NavbarBrand>
+                 <NavbarToggler onclick="@onclick" />
+                 <Collapse isOpen="@IsOpen" IsNavbar="true">
+                     <BlazorNav IsList="true" Class="mr-auto" IsNavbar="true">
+                         <NavItem>
+                             <BlazorNavLink IsActive="true" Href="#">Home</BlazorNavLink>
+                         </NavItem>
+                         <NavItem>
+                             <BlazorNavLink IsActive="true" Href="#">Customers</BlazorNavLink>
+                         </NavItem>
+                         <NavItem>
+                             <BlazorNavLink IsActive="true" Href="#">Sales</BlazorNavLink>
+                         </NavItem>
+                     </BlazorNav>
+                     <BlazorNav IsList="true" Class="nav justify-content-end" IsNavbar="true">
+
+                         <NavItem IsDropdown="true" IsOpen="@IsOpen2">
+                             <DropdownToggle IsOpen="@IsOpen2" onclick="@onclick2" Color="Color.Light">@context.User.Identity.Name</DropdownToggle>
+                             <DropdownMenu IsOpen="@IsOpen2">
+                                 <DropdownItem Href="#">Action</DropdownItem>
+                                 <DropdownItem Href="#">Settings</DropdownItem>
+                                 <DropdownItem IsDivider="true" />
+                                 <DropdownItem Href="#" OnClick="@LogoutClick">Logout</DropdownItem>
+                             </DropdownMenu>
+                         </NavItem>
+                      </BlazorNav>
+                 </Collapse>
+             </Navbar>
+
+            <div class="content px-4">
+                @Body
+            </div>
+        </div>
+    </Authorized>
+</AuthorizeView>
+
+@functions{
+
+    [CascadingParameter]
+    Task<AuthenticationState> AuthenticationState { get; set; }
+    bool IsOpen { get; set; } = false;
+    bool IsOpen2 { get; set; } = false;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (!(await AuthenticationState).User.Identity.IsAuthenticated)
+        {
+            uriHelper.NavigateTo("/login");
+        }
+    }
+
+    async Task LogoutClick()
+    {
+        await authStateProvider.Logout();
+        uriHelper.NavigateTo("/login");
+    }
+    void onclick(UIMouseEventArgs e)
+    {
+        IsOpen = !IsOpen;
+        StateHasChanged();
+    }
+    void onclick2(UIMouseEventArgs e)
+    {
+        IsOpen2 = !IsOpen2;
+        StateHasChanged();
+    }
+}
