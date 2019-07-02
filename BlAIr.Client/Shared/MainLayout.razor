@@ -1,11 +1,11 @@
-﻿@inherits LayoutComponentBase
+@inherits LayoutComponentBase
 @inject IUriHelper uriHelper
 @inject IdentityAuthenticationStateProvider authStateProvider
 
 <AuthorizeView>
     <Authorized>
          <div class="main">
-             <Navbar IsExpand="true" IsDark="false" Color="Color.Light">
+             <Navbar IsExpand="true" IsDark="true" Color="Color.Info">
                  <NavbarBrand Href="#">BlAir</NavbarBrand>
                  <NavbarToggler onclick="@onclick" />
                  <Collapse isOpen="@IsOpen" IsNavbar="true">

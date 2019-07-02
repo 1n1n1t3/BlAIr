@@ -5,7 +5,7 @@ var urlParams = new URLSearchParams(window.location.search);
 // This should be set to max number of DLL assemblies expected
 // to be loaded at boot up which can be discovered during
 // development by examining the DLL loaded in the JS console
-window.blazor_boot_dll_max = urlParams.has("dll_max") ? parseInt(urlParams.get("dll_max")) : 1;
+window.blazor_boot_dll_max = urlParams.has("dll_max") ? parseInt(urlParams.get("dll_max")) : 27;
 window.blazor_boot_dll_min = urlParams.has("dll_min") ? parseInt(urlParams.get("dll_min")) : 0;
 window.blazor_boot_dll_val = urlParams.has("dll_val") ? parseInt(urlParams.get("dll_val")) : 0;
 window.blazor_boot_dll_msg = urlParams.has("dll_msg") ? urlParams.get("dll_msg") : "Loading application...";
@@ -68,7 +68,7 @@ window.blazor_boot_xhr_send_delay_count = 1;
 window.blazor_boot_xhr_send_abort_count =  urlParams.has("xhr_send_abort_count")
 ? parseInt(urlParams.get("xhr_send_abort_count")) : 0;
 window.blazor_boot_xhr_send_delay_factor = urlParams.has("xhr_send_delay_factor")
-    ? parseInt(urlParams.get("xhr_send_delay_factor")) : 0;
+    ? parseInt(urlParams.get("xhr_send_delay_factor")) : 150;
 
 if (window.blazor_boot_xhr_send_delay_factor) {
     XMLHttpRequest.prototype.orig_send = XMLHttpRequest.prototype.send;

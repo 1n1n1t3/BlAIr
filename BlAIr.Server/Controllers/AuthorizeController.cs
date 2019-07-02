@@ -3,8 +3,6 @@ using BlAIr.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,9 +24,9 @@ namespace BlAIr.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginParameters parameters)
         {
-            if(!ModelState.IsValid) return BadRequest(ModelState.Values.SelectMany(state => state.Errors)
-                                                                       .Select(error => error.ErrorMessage)
-                                                                       .FirstOrDefault());
+            if (!ModelState.IsValid) return BadRequest(ModelState.Values.SelectMany(state => state.Errors)
+                                                                        .Select(error => error.ErrorMessage)
+                                                                        .FirstOrDefault());
 
             var user = await _userManager.FindByNameAsync(parameters.UserName);
             if (user == null) return BadRequest("User does not exist");
